@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, ReactNode, useContext, useReducer } from "react";
 
 type StateProps = {
   currentStep: number;
@@ -13,9 +13,25 @@ type ActionProps = {
   payload: any;
 };
 
-const FormContext = createContext(undefined);
+type FormProviderProps = {
+    children: ReactNode
+}
 
-// Reducer
+const initialData: StateProps = {
+  currentStep: 0,
+  name: '',
+  level: 0,
+  email: '',
+  github: '',
+}
+
+type ContextType = {
+  state: StateProps;
+  dispatch: (action: ActionProps) => void;
+};
+
+const FormContext = createContext<ContextType | undefined>(undefined);
+
 enum FormActions {
   setCurrentStep,
   setName,
@@ -23,7 +39,6 @@ enum FormActions {
   setEmail,
   setGithub,
 }
-
 const formReducer = (state: StateProps, action: ActionProps) => {
   switch (action.type) {
     case FormActions.setCurrentStep:
@@ -40,3 +55,22 @@ const formReducer = (state: StateProps, action: ActionProps) => {
       return state;
   }
 };
+
+
+export const FormProvider = ({children}: FormProviderProps) => {
+    const [state, dispatch] = useReducer(formReducer, initialData);
+    const value = { state, dispatch };
+    return (
+        <FormContext.Provider value={value}>
+            {children}
+        </FormContext.Provider>
+    )
+}
+
+export const useForm = () => {
+    const context = useContext(FormContext);
+    if(context === undefined) {
+        throw new Error("useForm must be used within FormProvider");
+    }
+    return context;
+}
