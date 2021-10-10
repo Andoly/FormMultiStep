@@ -32,7 +32,7 @@ type ContextType = {
 
 const FormContext = createContext<ContextType | undefined>(undefined);
 
-enum FormActions {
+export enum FormActions {
   setCurrentStep,
   setName,
   setLevel,
