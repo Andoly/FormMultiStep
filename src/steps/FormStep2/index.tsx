@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from "react";
+import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { SelectOption } from "../../component/SelectOption";
@@ -16,13 +16,6 @@ export const FormStep2 = () => {
       payload: 2,
     });
   }, []);
-
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: FormActions.setName,
-      payload: event.target.value,
-    });
-  };
 
   const handleNextStep = () => {
     if (state.level) {
