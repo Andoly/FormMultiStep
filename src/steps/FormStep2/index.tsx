@@ -11,14 +11,18 @@ export const FormStep2 = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch({
-      type: FormActions.setCurrentStep,
-      payload: 2,
-    });
+    if (!state.name) {
+      history.push("/");
+    } else {
+      dispatch({
+        type: FormActions.setCurrentStep,
+        payload: 2,
+      });
+    }
   }, []);
 
   const handleNextStep = () => {
-    if (state.level) {
+    if (state.level) {      
       history.push("/step3");
     } else {
       alert("Preencha os dados");
@@ -30,7 +34,7 @@ export const FormStep2 = () => {
       type: FormActions.setLevel,
       payload: level,
     });
-  }
+  };
 
   return (
     <Theme>
@@ -48,16 +52,16 @@ export const FormStep2 = () => {
           title="Sou iniciante"
           description="Comecei a programar há menos de 2 anos"
           icon="🥳"
-          selected={state.level === 0}
-          onClick={() => setLevel(0)}
+          selected={state.level === 1}
+          onClick={() => setLevel(1)}
         />
 
         <SelectOption
           title="Sou programador"
           description="Já programo há 2 anos ou mais"
           icon="😎"
-          selected={state.level === 1}
-          onClick={() => setLevel(1)}
+          selected={state.level === 2}
+          onClick={() => setLevel(2)}
         />
 
         <Link to="/" className="backButton">

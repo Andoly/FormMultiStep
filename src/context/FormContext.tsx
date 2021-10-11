@@ -3,7 +3,7 @@ import { createContext, ReactNode, useContext, useReducer } from "react";
 type StateProps = {
   currentStep: number;
   name: string;
-  level: 0 | 1;
+  level: 1 | 2;
   email: string;
   github: string;
 };
@@ -14,16 +14,16 @@ type ActionProps = {
 };
 
 type FormProviderProps = {
-    children: ReactNode
-}
+  children: ReactNode;
+};
 
 const initialData: StateProps = {
   currentStep: 0,
-  name: '',
-  level: 0,
-  email: '',
-  github: '',
-}
+  name: "",
+  level: 1,
+  email: "",
+  github: "",
+};
 
 type ContextType = {
   state: StateProps;
@@ -56,21 +56,16 @@ const formReducer = (state: StateProps, action: ActionProps) => {
   }
 };
 
-
-export const FormProvider = ({children}: FormProviderProps) => {
-    const [state, dispatch] = useReducer(formReducer, initialData);
-    const value = { state, dispatch };
-    return (
-        <FormContext.Provider value={value}>
-            {children}
-        </FormContext.Provider>
-    )
-}
+export const FormProvider = ({ children }: FormProviderProps) => {
+  const [state, dispatch] = useReducer(formReducer, initialData);
+  const value = { state, dispatch };
+  return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
+};
 
 export const useForm = () => {
-    const context = useContext(FormContext);
-    if(context === undefined) {
-        throw new Error("useForm must be used within FormProvider");
-    }
-    return context;
-}
+  const context = useContext(FormContext);
+  if (context === undefined) {
+    throw new Error("useForm must be used within FormProvider");
+  }
+  return context;
+};

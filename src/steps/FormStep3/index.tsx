@@ -12,7 +12,7 @@ export const FormStep3 = () => {
       type: FormActions.setCurrentStep,
       payload: 3,
     });
-  }, []);
+  }, [dispatch]);
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch({

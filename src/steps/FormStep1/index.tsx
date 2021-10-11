@@ -11,9 +11,9 @@ export const FormStep1 = () => {
   useEffect(() => {
     dispatch({
       type: FormActions.setCurrentStep,
-      payload: 1,
+      payload: 1,      
     });
-  }, []);
+  }, [dispatch]);
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch({
